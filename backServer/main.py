@@ -1,6 +1,5 @@
 """
-本地 Qwen 流式对话 API，使用 SSE（text/event-stream）推送 token。
-默认从仓库根目录下的 aiBaseModel/<QWEN_MODEL_NAME> 加载权重。
+本地 Qwen 流式对话 API：可同时加载 4B / 8B，经 engine 分流；SSE 推送 token。
 """
 from __future__ import annotations
 
@@ -40,7 +39,6 @@ def _default_system_prompt() -> str:
 
 
 def _messages_with_system(messages: list[dict]) -> list[dict]:
-    """合并默认 system 提示，约束 Base 模型少续写代码/日志垃圾。"""
     if not messages:
         return messages
     base = _default_system_prompt()
@@ -51,8 +49,6 @@ def _messages_with_system(messages: list[dict]) -> list[dict]:
 
 
 class _GarbageLogStoppingCriteria(StoppingCriteria):
-    """在生成中检测典型预训练垃圾续写片段并提前结束（仅匹配极窄模式，降低误伤）。"""
-
     _SUBSTRINGS = (
         "MotionEvent{",
         "otionEvent{",
@@ -75,17 +71,21 @@ class _GarbageLogStoppingCriteria(StoppingCriteria):
         return any(s in text for s in self._SUBSTRINGS)
 
 
-def _resolve_model_dir() -> Path:
-    explicit = os.environ.get("QWEN_MODEL_PATH")
-    if explicit:
-        return Path(explicit).expanduser().resolve()
-    name = os.environ.get("QWEN_MODEL_NAME", "Qwen3-4B-Base")
+def _resolve_4b_dir() -> Path:
+    if p := os.environ.get("QWEN_MODEL_4B_DIR") or os.environ.get("QWEN_MODEL_PATH"):
+        return Path(p).expanduser().resolve()
+    name = os.environ.get("QWEN_MODEL_4B_NAME", "Qwen3-4B-Base")
     return (_AI_BASE_MODEL / name).resolve()
 
 
-MODEL_DIR = _resolve_model_dir()
+def _resolve_8b_dir() -> Path:
+    if p := os.environ.get("QWEN_MODEL_8B_DIR"):
+        return Path(p).expanduser().resolve()
+    name = os.environ.get("QWEN_MODEL_8B_NAME", "Qwen3-8B-Base")
+    return (_AI_BASE_MODEL / name).resolve()
 
-app = FastAPI(title="Qwen Local Chat", version="0.1.0")
+
+app = FastAPI(title="Qwen Local Chat", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -95,14 +95,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_tokenizer = None
-_model = None
+# engine -> {tokenizer, model, path}
+_engines: dict[str, dict[str, Any]] = {}
 _device: str | None = None
 _device_info: dict[str, Any] = {}
 
 
 def _build_device_info(dev: str) -> dict[str, Any]:
-    """供 /api/health 与启动日志使用：区分 NVIDIA CUDA、Apple MPS、CPU。"""
     info: dict[str, Any] = {
         "torch_device": dev,
         "backend": dev,
@@ -141,23 +140,49 @@ def _pick_dtype(dev: str) -> torch.dtype:
     return torch.float32
 
 
-def load_model() -> None:
-    global _tokenizer, _model, _device, _device_info
-    if _model is not None:
+def _load_one(engine_key: str, model_dir: Path, dtype: torch.dtype, device: str) -> None:
+    tok = AutoTokenizer.from_pretrained(str(model_dir), trust_remote_code=True)
+    kwargs: dict = {"trust_remote_code": True, "dtype": dtype}
+    # 单进程加载多个完整模型时不用 device_map="auto"，避免 accelerate 与多权重争用
+    model = AutoModelForCausalLM.from_pretrained(str(model_dir), **kwargs)
+    model = model.to(device)
+    model.eval()
+    _engines[engine_key] = {
+        "tokenizer": tok,
+        "model": model,
+        "path": model_dir,
+        "name": model_dir.name,
+    }
+    print(
+        f"[qwen-chat] 已加载 engine={engine_key} path={model_dir}",
+        flush=True,
+    )
+
+
+def load_models() -> None:
+    global _device, _device_info
+    if _engines:
         return
-    if not MODEL_DIR.is_dir():
-        raise RuntimeError(f"模型目录不存在: {MODEL_DIR}")
     _device = _pick_device()
     _device_info = _build_device_info(_device)
     dtype = _pick_dtype(_device)
-    _tokenizer = AutoTokenizer.from_pretrained(str(MODEL_DIR), trust_remote_code=True)
-    kwargs: dict = {"trust_remote_code": True, "dtype": dtype}
-    if _device == "cuda":
-        kwargs["device_map"] = "auto"
-    _model = AutoModelForCausalLM.from_pretrained(str(MODEL_DIR), **kwargs)
-    if _device != "cuda":
-        _model = _model.to(_device)
-    _model.eval()
+
+    dirs = [("4b", _resolve_4b_dir()), ("8b", _resolve_8b_dir())]
+    for key, d in dirs:
+        if not d.is_dir():
+            print(f"[qwen-chat] 跳过 engine={key}（目录不存在）: {d}", flush=True)
+            continue
+        try:
+            _load_one(key, d, dtype, _device)
+        except Exception as e:
+            print(f"[qwen-chat] engine={key} 加载失败: {e}", flush=True)
+
+    if not _engines:
+        raise RuntimeError(
+            "未能加载任何模型。请将 Qwen3-4B-Base / Qwen3-8B-Base 放入 aiBaseModel/，"
+            "或设置 QWEN_MODEL_4B_DIR / QWEN_MODEL_8B_DIR。"
+        )
+
     print(
         "[qwen-chat] 推理设备: "
         f"{_device_info.get('label_zh')} (torch_device={_device}) "
@@ -168,7 +193,7 @@ def load_model() -> None:
 
 @app.on_event("startup")
 def _startup() -> None:
-    load_model()
+    load_models()
 
 
 class ChatMessage(BaseModel):
@@ -178,12 +203,11 @@ class ChatMessage(BaseModel):
 
 class ChatRequest(BaseModel):
     messages: list[ChatMessage] = Field(..., min_length=1)
+    engine: Literal["4b", "8b"] = "4b"
     max_new_tokens: int = Field(1024, ge=1, le=8192)
     temperature: float = Field(0.7, ge=0.0, le=2.0)
     top_p: float = Field(0.9, ge=0.0, le=1.0)
-    # Base 模型容易陷入重复循环，默认略加重惩罚；对话模型可调低到 1.0～1.05
     repetition_penalty: float = Field(1.15, ge=1.0, le=2.0)
-    # 禁止连续重复同样长度的 n-gram，0 表示关闭（由 transformers 处理）
     no_repeat_ngram_size: int = Field(4, ge=0, le=16)
 
 
@@ -192,13 +216,20 @@ def _sse_chunk(obj: dict) -> str:
 
 
 def _generate_sse(request: ChatRequest):
-    assert _tokenizer is not None and _model is not None and _device is not None
+    eng = request.engine
+    if eng not in _engines:
+        raise HTTPException(
+            status_code=503,
+            detail=f"引擎 {eng} 未加载（模型目录可能不存在或加载失败）",
+        )
+    pack = _engines[eng]
+    tokenizer = pack["tokenizer"]
+    model = pack["model"]
+    assert _device is not None
 
     messages = _messages_with_system([m.model_dump() for m in request.messages])
     try:
-        # transformers>=5 默认 return_dict=True，会得到 BatchEncoding；generate 需要 Tensor
-        # Qwen3：enable_thinking=False 会在 assistant 开头写入空 thinking 槽位，利于正常对话续写
-        input_ids = _tokenizer.apply_chat_template(
+        input_ids = tokenizer.apply_chat_template(
             messages,
             tokenize=True,
             add_generation_prompt=True,
@@ -209,10 +240,10 @@ def _generate_sse(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"构建对话失败: {e}") from e
 
-    input_ids = input_ids.to(_model.device)
+    input_ids = input_ids.to(model.device)
     attention_mask = torch.ones_like(input_ids, dtype=torch.long)
     streamer = TextIteratorStreamer(
-        _tokenizer,
+        tokenizer,
         skip_prompt=True,
         skip_special_tokens=True,
     )
@@ -222,12 +253,12 @@ def _generate_sse(request: ChatRequest):
         "attention_mask": attention_mask,
         "streamer": streamer,
         "max_new_tokens": request.max_new_tokens,
-        "pad_token_id": _tokenizer.pad_token_id,
-        "eos_token_id": _tokenizer.eos_token_id,
+        "pad_token_id": tokenizer.pad_token_id,
+        "eos_token_id": tokenizer.eos_token_id,
         "repetition_penalty": request.repetition_penalty,
     }
     if use_garbage_stop:
-        gen_kwargs["stopping_criteria"] = StoppingCriteriaList([_GarbageLogStoppingCriteria(_tokenizer)])
+        gen_kwargs["stopping_criteria"] = StoppingCriteriaList([_GarbageLogStoppingCriteria(tokenizer)])
     if request.no_repeat_ngram_size > 0:
         gen_kwargs["no_repeat_ngram_size"] = request.no_repeat_ngram_size
     if request.temperature > 0:
@@ -239,7 +270,7 @@ def _generate_sse(request: ChatRequest):
 
     def _run_generate() -> None:
         with torch.inference_mode():
-            _model.generate(**gen_kwargs)
+            model.generate(**gen_kwargs)
 
     worker = Thread(target=_run_generate, daemon=True)
     worker.start()
@@ -272,11 +303,28 @@ def chat_stream(request: ChatRequest):
 
 @app.get("/api/health")
 def health():
+    engines_out: dict[str, Any] = {}
+    for key in ("4b", "8b"):
+        if key in _engines:
+            p = _engines[key]["path"]
+            engines_out[key] = {
+                "loaded": True,
+                "model_dir": str(p),
+                "model_name": _engines[key]["name"],
+            }
+        else:
+            d = _resolve_4b_dir() if key == "4b" else _resolve_8b_dir()
+            engines_out[key] = {
+                "loaded": False,
+                "model_dir": str(d),
+                "model_name": d.name,
+            }
+    primary = _engines.get("4b") or _engines.get("8b")
     return {
         "ok": True,
         "ai_base_model_root": str(_AI_BASE_MODEL),
-        "model_dir": str(MODEL_DIR),
-        "model_name": MODEL_DIR.name,
-        "loaded": _model is not None,
+        "engines": engines_out,
+        "primary_model_name": primary["name"] if primary else None,
+        "loaded": len(_engines) > 0,
         "device": _device_info if _device else None,
     }
