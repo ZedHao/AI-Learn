@@ -4,6 +4,8 @@ import { ref, computed, nextTick, watch, onMounted } from "vue";
 const apiBase = import.meta.env.VITE_API_BASE || "";
 
 const modelLabel = ref("本地基座模型");
+/** 来自 /api/health：CUDA / Apple MPS / CPU */
+const deviceHint = ref("");
 
 const messages = ref([
   {
@@ -23,6 +25,16 @@ onMounted(async () => {
     if (!r.ok) return;
     const j = await r.json();
     if (j.model_name) modelLabel.value = j.model_name;
+    const d = j.device;
+    if (d && typeof d === "object") {
+      if (d.cuda_device_name) {
+        deviceHint.value = `${d.label_zh || d.torch_device} · ${d.cuda_device_name}`;
+      } else if (d.torch_device === "mps") {
+        deviceHint.value = `${d.label_zh || "Apple Silicon(MPS)"} · ${d.machine || ""}`;
+      } else {
+        deviceHint.value = `${d.label_zh || d.torch_device} · ${d.machine || ""}`;
+      }
+    }
   } catch {
     /* 后端未启动时忽略 */
   }
@@ -198,7 +210,7 @@ function clearChat() {
           @keydown.enter.exact.prevent="send"
         />
         <div class="actions">
-          <span class="hint">当前模型：{{ modelLabel }}</span>
+          <span class="hint">当前模型：{{ modelLabel }} · 算力：{{ deviceHint || "—" }}</span>
           <button type="button" class="btn primary" :disabled="!canSend" @click="send">
             {{ sending ? "生成中…" : "发送" }}
           </button>

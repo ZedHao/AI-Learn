@@ -6,9 +6,11 @@ from __future__ import annotations
 
 import json
 import os
+import platform
+import sys
 from pathlib import Path
 from threading import Thread
-from typing import Literal
+from typing import Any, Literal
 
 import torch
 from fastapi import FastAPI, HTTPException
@@ -96,6 +98,31 @@ app.add_middleware(
 _tokenizer = None
 _model = None
 _device: str | None = None
+_device_info: dict[str, Any] = {}
+
+
+def _build_device_info(dev: str) -> dict[str, Any]:
+    """供 /api/health 与启动日志使用：区分 NVIDIA CUDA、Apple MPS、CPU。"""
+    info: dict[str, Any] = {
+        "torch_device": dev,
+        "backend": dev,
+        "label_zh": "CPU",
+        "platform_os": platform.system(),
+        "machine": platform.machine(),
+        "python": sys.version.split()[0],
+    }
+    if dev == "cuda":
+        info["label_zh"] = "NVIDIA CUDA"
+        if torch.cuda.is_available():
+            info["cuda_device_name"] = torch.cuda.get_device_name(0)
+            info["cuda_version"] = torch.version.cuda
+            info["gpu_count"] = torch.cuda.device_count()
+    elif dev == "mps":
+        info["label_zh"] = "Apple Silicon（MPS / Metal）"
+        info["note_zh"] = "适用于 M1 / M2 / M3 / M4 等，走 Metal 加速而非 CUDA"
+    else:
+        info["label_zh"] = "CPU（无 GPU 加速）"
+    return info
 
 
 def _pick_device() -> str:
@@ -115,12 +142,13 @@ def _pick_dtype(dev: str) -> torch.dtype:
 
 
 def load_model() -> None:
-    global _tokenizer, _model, _device
+    global _tokenizer, _model, _device, _device_info
     if _model is not None:
         return
     if not MODEL_DIR.is_dir():
         raise RuntimeError(f"模型目录不存在: {MODEL_DIR}")
     _device = _pick_device()
+    _device_info = _build_device_info(_device)
     dtype = _pick_dtype(_device)
     _tokenizer = AutoTokenizer.from_pretrained(str(MODEL_DIR), trust_remote_code=True)
     kwargs: dict = {"trust_remote_code": True, "dtype": dtype}
@@ -130,6 +158,12 @@ def load_model() -> None:
     if _device != "cuda":
         _model = _model.to(_device)
     _model.eval()
+    print(
+        "[qwen-chat] 推理设备: "
+        f"{_device_info.get('label_zh')} (torch_device={_device}) "
+        f"{_device_info.get('cuda_device_name') or ''}",
+        flush=True,
+    )
 
 
 @app.on_event("startup")
@@ -244,4 +278,5 @@ def health():
         "model_dir": str(MODEL_DIR),
         "model_name": MODEL_DIR.name,
         "loaded": _model is not None,
+        "device": _device_info if _device else None,
     }
