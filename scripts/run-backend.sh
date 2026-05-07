@@ -6,6 +6,34 @@ cd "$ROOT/backServer"
 
 PORT="${BACKEND_PORT:-8000}"
 
+# 未传模型路径时：允许无模型启动（与 run-backend.ps1 一致），避免克隆后无权重即崩溃
+if [ "$#" -eq 0 ]; then
+  export QWEN_ALLOW_EMPTY_START="${QWEN_ALLOW_EMPTY_START:-1}"
+fi
+
+# 传入任意个模型目录（相对仓库根或绝对路径）时写入 QWEN_ENGINE_PATHS，加载几个算几个（引擎 id 为 m0、m1…）
+# 示例: ./scripts/run-backend.sh aiBaseModel/qwen3-vl/8b-instruct
+if [ "$#" -gt 0 ]; then
+  export QWEN_ALLOW_EMPTY_START="${QWEN_ALLOW_EMPTY_START:-0}"
+  export QWEN_ENGINE_PATHS=""
+  for rel in "$@"; do
+    [ -z "$rel" ] && continue
+    case "$rel" in
+      /*) abs="$rel" ;;
+      *)
+        # Git Bash / MSYS: /e/... 视为绝对路径
+        if [[ "$rel" =~ ^[A-Za-z]:[\\/] ]] || [[ "$rel" =~ ^/[a-z]/ ]]; then
+          abs="$rel"
+        else
+          abs="$ROOT/$rel"
+        fi
+        ;;
+    esac
+    QWEN_ENGINE_PATHS+="$abs"$'\n'
+  done
+  export QWEN_ENGINE_PATHS
+fi
+
 if ! command -v lsof >/dev/null 2>&1; then
   echo "警告: 未找到 lsof，无法自动释放端口。请手动结束占用 ${PORT} 的进程。" >&2
 else

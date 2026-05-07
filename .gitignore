@@ -1,6 +1,16 @@
-# 本地基座模型（4B/8B 等权重文件仅保留本机，不入库）
-aiBaseModel/*
-!aiBaseModel/.gitkeep
+# aiBaseModel：保留目录结构（.gitkeep），不入库权重与大二进制
+aiBaseModel/**/*.safetensors
+aiBaseModel/**/*.bin
+aiBaseModel/**/*.pt
+aiBaseModel/**/*.pth
+aiBaseModel/**/*.gguf
+aiBaseModel/**/*.onnx
+aiBaseModel/**/*.msgpack
+aiBaseModel/**/*.h5
+aiBaseModel/**/*.npz
+aiBaseModel/**/*.lck
+aiBaseModel/**/*.safetensors.index.json
+aiBaseModel/**/tokenizer.model
 
 # 前端依赖与构建产物
 front/node_modules/
