@@ -1,0 +1,62 @@
+INDEX.md
+  s_f329c941bc9108::t_b8a0560058fa8e 1-252
+verify_position_encoding.py
+  s_f329c941bc9108::t_b83bd6838c7c80 1-166
+compare_sentences.py
+  s_f329c941bc9108::t_cbdfd4048e7c5c 1-209
+transformer/TRANSFORMER_README.md
+  h_7bc0108fa178ba 1-434
+positional_encoding_demo_v2.py
+  s_f329c941bc9108::t_ccf27accdd22bd 1-102,104-172
+  s_f329c941bc9108::t_c60126805969ed 103
+transformer/4test_feed_forward_network.py
+  s_e4151f0c9f6d8f::t_ffb2ef616447e3 1-386
+understand_forward.py
+  s_f329c941bc9108::t_c7eaad7ec77229 1-74
+understand_attention_output.py
+  s_f329c941bc9108::t_2e467d8e6c206f 64-67
+  s_f329c941bc9108::t_fdba3da12723ca 1-44,51-63,68-103,107-175
+  s_f329c941bc9108::t_46a77f338ac262 45-50
+  s_f329c941bc9108::t_9b6d7dd1ce1bac 104-106
+transformer/test_transformer.py
+  s_e4151f0c9f6d8f::t_b7282a7d1d174e 231-276
+  s_e4151f0c9f6d8f::t_82ef34b835dbf5 3-82
+  s_e4151f0c9f6d8f::t_56596bc102fc30 453-520
+  s_e4151f0c9f6d8f::t_938dd02cd77e42 547-637
+  s_e4151f0c9f6d8f::t_9e9502328fbb7c 679-781
+  s_e4151f0c9f6d8f::t_324957eb6147bc 833-952
+  s_e4151f0c9f6d8f::t_b5074fed4a785f 305-350
+  s_e4151f0c9f6d8f::t_9f0b0efa4535c6 373-430
+  s_e4151f0c9f6d8f::t_a0f0a09ceb0948 153-195
+  h_7bc0108fa178ba 1-2,83-99,133-152,196-230,277-304,351-372,431-452,521-546,638-678,782-832,953-1019
+  s_e4151f0c9f6d8f::t_1884dc7cd33816 100-132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.43-trip",
+  "base_commit_sha": "678043e26ab4bef442529ff2f3a28315f7a46af7",
+  "prompts": {},
+  "humans": {
+    "h_7bc0108fa178ba": {
+      "author": "huangh3 <huangh3@trip.com>"
+    }
+  },
+  "sessions": {
+    "s_e4151f0c9f6d8f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4e76fc71-becd-4293-83cb-7a7845ef24b5",
+        "model": "arn:aws:bedrock:us-west-2:296122126678:application-inference-profile/62f3vkyjp855"
+      },
+      "human_author": "huangh3 <huangh3@trip.com>"
+    },
+    "s_f329c941bc9108": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f8a6345c-6f52-4633-981c-87914269ea49",
+        "model": "arn:aws:bedrock:us-west-2:296122126678:application-inference-profile/62f3vkyjp855"
+      },
+      "human_author": "huangh3 <huangh3@trip.com>"
+    }
+  }
+}
