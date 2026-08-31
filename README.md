@@ -61,11 +61,13 @@ chmod +x scripts/run-backend.sh scripts/run-front.sh   # 首次需要
 ```
 
 **前端**（Vue + Vite，默认端口 `5173`）：
-
+[model-00003-of-00003.safetensors](aiBaseModel/Qwen3-4B-Base/model-00003-of-00003.safetensors)
+[model-00002-of-00003.safetensors](aiBaseModel/Qwen3-4B-Base/model-00002-of-00003.safetensors)
+[model-00001-of-00003.safetensors](aiBaseModel/Qwen3-4B-Base/model-00001-of-00003.safetensors)****
 ```bash
 ./scripts/run-front.sh
 ```
-
+[model-00001-of-00003.safetensors](aiBaseModel/Qwen3-4B-Base/model-00001-of-00003.safetensors)
 浏览器访问：<http://localhost:5173>。开发环境下 Vite 会将 `/api` 代理到后端 `http://127.0.0.1:8000`。
 
 ### 方式二：等价命令行
