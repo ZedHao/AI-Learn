@@ -1,0 +1,30 @@
+1record/base.json
+  h_7bc0108fa178ba 1-238
+1record/local.json
+  h_7bc0108fa178ba 1-334
+transformer/test_transformer.py
+  s_60e187ae1eb31a::t_12a4c513e83aa3 1143
+  h_7bc0108fa178ba 1125-1135,1137
+  s_60e187ae1eb31a::t_53c88a8ece78cc 372-501
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.51-trip",
+  "base_commit_sha": "d745eb0416901ffc97c753cdbf94ea4b938d8f5b",
+  "prompts": {},
+  "humans": {
+    "h_7bc0108fa178ba": {
+      "author": "huangh3 <huangh3@trip.com>"
+    }
+  },
+  "sessions": {
+    "s_60e187ae1eb31a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2a69dc0e-72b2-420e-a7d2-808b07815299",
+        "model": "arn:aws:bedrock:us-west-2:432181126620:application-inference-profile/w8iep3luvsbh"
+      },
+      "human_author": "huangh3 <huangh3@trip.com>"
+    }
+  }
+}
