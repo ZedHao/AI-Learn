@@ -1,0 +1,334 @@
+[
+  {
+    "transKey": "api.response.request_received",
+    "transValue": "请求已接收，正在处理中。",
+    "description": "API 响应 - 购物指南请求已接收",
+    "sourceText": "请求已接收，正在处理中。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "api.error.chat_processing_error",
+    "transValue": "处理聊天请求时发生错误",
+    "description": "API 错误 - 聊天处理异常",
+    "sourceText": "处理聊天请求时发生错误: {str(e)}",
+    "originLocale": "zh-CN",
+    "placeholderList": [
+      {
+        "name": "error_message",
+        "value": "str(e)",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "api.error.product_compare_error",
+    "transValue": "商品对比错误",
+    "description": "API 错误 - 商品对比处理失败",
+    "sourceText": "商品对比错误 {str(e)}",
+    "originLocale": "zh-CN",
+    "placeholderList": [
+      {
+        "name": "error_message",
+        "value": "str(e)",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "transfer_human.script.default.o.1",
+    "transValue": "收到，我帮您对接真人旅行顾问，顾问会根据您的想法推荐合适的线路，稍等一下就好~",
+    "description": "转人工话术 - 导购 O 类型文案1（默认）",
+    "sourceText": "收到，我帮您对接真人旅行顾问，顾问会根据您的想法推荐合适的线路，稍等一下就好~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.default.o.2",
+    "transValue": "好的，您的需求我同步给旅行顾问了，顾问可以帮您挑更合适的产品，马上就来~",
+    "description": "转人工话术 - 导购 O 类型文案2（默认）",
+    "sourceText": "好的，您的需求我同步给旅行顾问了，顾问可以帮您挑更合适的产品，马上就来~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.default.o.3",
+    "transValue": "您的咨询已收到~为了给您提供更专业的解答，已为您转接旅行顾问~",
+    "description": "转人工话术 - 导购 O 类型文案3（默认）",
+    "sourceText": "您的咨询已收到~为了给您提供更专业的解答，已为您转接旅行顾问~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.default.ob.1",
+    "transValue": "已为您对接目的地旅行顾问，携程官方顾问也会全程在线协助~",
+    "description": "转人工话术 - 定制 B 类型文案1（默认）",
+    "sourceText": "已为您对接目的地旅行顾问，携程官方顾问也会全程在线协助~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.default.ob.2",
+    "transValue": "接下来由当地旅行顾问为您量身设计行程，携程官方顾问也会全程保障服务质量~",
+    "description": "转人工话术 - 定制 B 类型文案2（默认）",
+    "sourceText": "接下来由当地旅行顾问为您量身设计行程，携程官方顾问也会全程保障服务质量~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.default.ob.3",
+    "transValue": "帮您匹配到了当地的旅行顾问，顾问会帮您规划最合适的行程，稍等一下~",
+    "description": "转人工话术 - 定制 B 类型文案3（默认）",
+    "sourceText": "帮您匹配到了当地的旅行顾问，顾问会帮您规划最合适的行程，稍等一下~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.o.1",
+    "transValue": "帮您对接真人旅行顾问，顾问可以一对一为您解答疑问、提供专业建议~点击下方卡片开始咨询。",
+    "description": "转人工话术 - 导购 O 类型文案1（问道 TG）",
+    "sourceText": "帮您对接真人旅行顾问，顾问可以一对一为您解答疑问、提供专业建议~点击下方卡片开始咨询。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.o.2",
+    "transValue": "您的咨询已收到~为了给您提供更专业的解答，可以点击下方卡片，和人工顾问沟通~",
+    "description": "转人工话术 - 导购 O 类型文案2（问道 TG）",
+    "sourceText": "您的咨询已收到~为了给您提供更专业的解答，可以点击下方卡片，和人工顾问沟通~",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.o.3",
+    "transValue": "帮您匹配到了旅行顾问~点一下就能和顾问直接聊，顾问会根据您的情况推荐。",
+    "description": "转人工话术 - 导购 O 类型文案3（问道 TG）",
+    "sourceText": "帮您匹配到了旅行顾问~点一下就能和顾问直接聊，顾问会根据您的情况推荐。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.ob.1",
+    "transValue": "帮您找到了擅长该地区服务的定制师~点一下即可开始，定制师会帮您设计最合适的行程。",
+    "description": "转人工话术 - 定制 B 类型文案1（问道 TG）",
+    "sourceText": "帮您找到了擅长该地区服务的定制师~点一下即可开始，定制师会帮您设计最合适的行程。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.ob.2",
+    "transValue": "行程可以找专业定制师来规划~点击下方卡片进入咨询，定制师会根据您的想法量身设计。",
+    "description": "转人工话术 - 定制 B 类型文案2（问道 TG）",
+    "sourceText": "行程可以找专业定制师来规划~点击下方卡片进入咨询，定制师会根据您的想法量身设计。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.h_ob.1",
+    "transValue": "为您对接携程高端定制师，擅长根据您的偏好量身打造深度行程。点击下方卡片，开始您的专属咨询。",
+    "description": "转人工话术 - 高端定制 HB 类型文案1（问道 TG）",
+    "sourceText": "为您对接携程高端定制师，擅长根据您的偏好量身打造深度行程。点击下方卡片，开始您的专属咨询。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.h_ob.2",
+    "transValue": "您的需求已收到~由高端定制师为您一对一设计会更合适，点击进入专属咨询通道。",
+    "description": "转人工话术 - 高端定制 HB 类型文案2（问道 TG）",
+    "sourceText": "您的需求已收到~由高端定制师为您一对一设计会更合适，点击进入专属咨询通道。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.script.tg.h_ob.3",
+    "transValue": "这类行程比较讲究细节和节奏把控，交给携程高端定制师来帮您安排。点击下方卡片即可开始。",
+    "description": "转人工话术 - 高端定制 HB 类型文案3（问道 TG）",
+    "sourceText": "这类行程比较讲究细节和节奏把控，交给携程高端定制师来帮您安排。点击下方卡片即可开始。",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "context.warning.missing_products",
+    "transValue": "上下文中无提及产品",
+    "description": "上下文检查警告 - 缺少提及产品",
+    "sourceText": "上下文中无提及产品",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "context.warning.missing_filters",
+    "transValue": "上下文中无筛选条件",
+    "description": "上下文检查警告 - 缺少筛选条件",
+    "sourceText": "上下文中无筛选条件",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "context.warning.missing_departure",
+    "transValue": "上下文中无出发地",
+    "description": "上下文检查警告 - 缺少出发地",
+    "sourceText": "上下文中无出发地",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "suggestion.downgrade_clarification_dim",
+    "transValue": "出发地",
+    "description": "推荐推品降级澄清维度",
+    "sourceText": "出发地",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "session_summary.invalid_session_id",
+    "transValue": "sessionId is required",
+    "description": "会话总结参数校验 - sessionId 必需",
+    "sourceText": "sessionId is required",
+    "originLocale": "en-US",
+    "placeholderList": []
+  },
+  {
+    "transKey": "session_summary.invalid_history",
+    "transValue": "no history create_time for session_id",
+    "description": "会话总结参数校验 - 历史记录缺失",
+    "sourceText": "no history create_time for session_id={request.sessionId}",
+    "originLocale": "en-US",
+    "placeholderList": [
+      {
+        "name": "session_id",
+        "value": "request.sessionId",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "session_summary.error",
+    "transValue": "会话总结任务受理失败",
+    "description": "会话总结异常",
+    "sourceText": "会话总结任务受理失败: {e}",
+    "originLocale": "zh-CN",
+    "placeholderList": [
+      {
+        "name": "error",
+        "value": "e",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "sale_helper.script_update_error",
+    "transValue": "促单话术更新失败",
+    "description": "促单话术更新异常",
+    "sourceText": "促单话术更新失败: {e}",
+    "originLocale": "zh-CN",
+    "placeholderList": [
+      {
+        "name": "error",
+        "value": "e",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "sale_helper.msg_id_required",
+    "transValue": "msgId is required",
+    "description": "促单话术更新参数校验 - msgId 必需",
+    "sourceText": "msgId is required",
+    "originLocale": "en-US",
+    "placeholderList": []
+  },
+  {
+    "transKey": "sale_helper.origin_script_required",
+    "transValue": "originScript is required",
+    "description": "促单话术更新参数校验 - originScript 必需",
+    "sourceText": "originScript is required",
+    "originLocale": "en-US",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.direct_transfer",
+    "transValue": "收到您的诉求~点击下方卡片可直接转接真人旅行顾问",
+    "description": "转人工 Agent 标签话术 - 直接转人诉求",
+    "sourceText": "收到您的诉求~点击下方卡片可直接转接真人旅行顾问",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.group_tour_high_risk",
+    "transValue": "看到您这次是带[人群]一起出行，为了行程的细节和保障安排得更稳妥，点击下方卡片可直接转接真人旅行顾问为您服务～",
+    "description": "转人工 Agent 标签话术 - 跟团+高风险人群画像",
+    "sourceText": "看到您这次是带[人群]一起出行，为了行程的细节和保障安排得更稳妥，点击下方卡片可直接转接真人旅行顾问为您服务～",
+    "originLocale": "zh-CN",
+    "placeholderList": [
+      {
+        "name": "people_type",
+        "value": "[人群]",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "transKey": "transfer_human.agent_tag.special_requirement",
+    "transValue": "看到您有特殊需求，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+    "description": "转人工 Agent 标签话术 - 特殊要求",
+    "sourceText": "看到您有特殊需求，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.complex_demand",
+    "transValue": "您的需求挺具体的，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+    "description": "转人工 Agent 标签话术 - 需求复杂/需定制",
+    "sourceText": "您的需求挺具体的，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.high_purchase_intent",
+    "transValue": "已经在计划这趟行程了吧？让顾问直接帮您锁定名额、拿到最优价格，点击卡片可直接转接真人旅行顾问为您服务，确保安排到位～",
+    "description": "转人工 Agent 标签话术 - 高下单意愿",
+    "sourceText": "已经在计划这趟行程了吧？让顾问直接帮您锁定名额、拿到最优价格，点击卡片可直接转接真人旅行顾问为您服务，确保安排到位～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.specific_product",
+    "transValue": "您已经有心仪的产品/旅行社了吗，真人旅行顾问可直接帮您对接行程、核实余位和价格，点击卡片可直接转接",
+    "description": "转人工 Agent 标签话术 - 具体产品/编号/链接/指定社",
+    "sourceText": "您已经有心仪的产品/旅行社了吗，真人旅行顾问可直接帮您对接行程、核实余位和价格，点击卡片可直接转接",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.urgent_travel_time",
+    "transValue": "您出发时间挺近的，真人顾问可加急帮您确认行程和余位，别耽误了出发，点击卡片可直接转接～",
+    "description": "转人工 Agent 标签话术 - 出行时间紧迫",
+    "sourceText": "您出发时间挺近的，真人顾问可加急帮您确认行程和余位，别耽误了出发，点击卡片可直接转接～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.overseas_group_tour",
+    "transValue": "出境行程可能涉及签证和出入境手续，让专业旅行顾问帮您把关，出行更放心，点击卡片可直接转接～",
+    "description": "转人工 Agent 标签话术 - 海外/出境跟团",
+    "sourceText": "出境行程可能涉及签证和出入境手续，让专业旅行顾问帮您把关，出行更放心，点击卡片可直接转接～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.entrance_high_intent",
+    "transValue": "已为您匹配真人旅行顾问，点击下方卡片可直接转接",
+    "description": "转人工 Agent 标签话术 - 入口高意向",
+    "sourceText": "已为您匹配真人旅行顾问，点击下方卡片可直接转接",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  },
+  {
+    "transKey": "transfer_human.agent_tag.black_diamond_vip",
+    "transValue": "尊贵的黑钻用户，可为您安排专属旅行顾问一对一服务，后续行程上的任何需要都可以直接找 TA，点击卡片可直接转接～",
+    "description": "转人工 Agent 标签话术 - 黑钻贵宾专属服务",
+    "sourceText": "尊贵的黑钻用户，可为您安排专属旅行顾问一对一服务，后续行程上的任何需要都可以直接找 TA，点击卡片可直接转接～",
+    "originLocale": "zh-CN",
+    "placeholderList": []
+  }
+]

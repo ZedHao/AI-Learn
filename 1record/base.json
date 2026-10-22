@@ -1,0 +1,238 @@
+{
+  "version": "2.0",
+  "appId": "100057183",
+  "appName": "tour-ai-agent-service-application",
+  "keyDetails": {
+    "transfer_human.agent_tag.black_diamond_vip": {
+      "text": "尊贵的黑钻用户，可为您安排专属旅行顾问一对一服务，后续行程上的任何需要都可以直接找 TA，点击卡片可直接转接～",
+      "description": "转人工 Agent 标签话术 - 黑钻贵宾专属服务",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.entrance_high_intent": {
+      "text": "已为您匹配真人旅行顾问，点击下方卡片可直接转接",
+      "description": "转人工 Agent 标签话术 - 入口高意向",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.overseas_group_tour": {
+      "text": "出境行程可能涉及签证和出入境手续，让专业旅行顾问帮您把关，出行更放心，点击卡片可直接转接～",
+      "description": "转人工 Agent 标签话术 - 海外/出境跟团",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.urgent_travel_time": {
+      "text": "您出发时间挺近的，真人顾问可加急帮您确认行程和余位，别耽误了出发，点击卡片可直接转接～",
+      "description": "转人工 Agent 标签话术 - 出行时间紧迫",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.specific_product": {
+      "text": "您已经有心仪的产品/旅行社了吗，真人旅行顾问可直接帮您对接行程、核实余位和价格，点击卡片可直接转接",
+      "description": "转人工 Agent 标签话术 - 具体产品/编号/链接/指定社",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.high_purchase_intent": {
+      "text": "已经在计划这趟行程了吧？让顾问直接帮您锁定名额、拿到最优价格，点击卡片可直接转接真人旅行顾问为您服务，确保安排到位～",
+      "description": "转人工 Agent 标签话术 - 高下单意愿",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.complex_demand": {
+      "text": "您的需求挺具体的，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+      "description": "转人工 Agent 标签话术 - 需求复杂/需定制",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.special_requirement": {
+      "text": "看到您有特殊需求，需要专门确认下细节，点击卡片可直接转接真人旅行顾问为您服务，确保都安排到位～",
+      "description": "转人工 Agent 标签话术 - 特殊要求",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.group_tour_high_risk": {
+      "text": "看到您这次是带[人群]一起出行，为了行程的细节和保障安排得更稳妥，点击下方卡片可直接转接真人旅行顾问为您服务～",
+      "description": "转人工 Agent 标签话术 - 跟团+高风险人群画像",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.agent_tag.direct_transfer": {
+      "text": "收到您的诉求~点击下方卡片可直接转接真人旅行顾问",
+      "description": "转人工 Agent 标签话术 - 直接转人诉求",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 09:10:27",
+      "updatedAt": "2026-09-17 09:10:27",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "reject_gate.fallback.other_intent": {
+      "text": "拑歉，暂时无法理解您的意思，如需人工协助，请对我请讲：转人工。我将为您转接携程客服。",
+      "description": "拒识兔底 - 其他意图拒识",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:41:59",
+      "updatedAt": "2026-09-17 11:42:15",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "reject_gate.fallback.identity": {
+      "text": "我是携程旅游的智能助手旅行顾问。专注于为您提供旅游相关的信息和建议。如果您有目的地推荐、行程规划、产品预定等方面的问题，请随时问我。例如可以问我：帮我推荐去三亚五天的跟团游产品。",
+      "description": "拒识兔底 - 身份咨询（PILOT 模式）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:41:59",
+      "updatedAt": "2026-09-17 08:41:59",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "reject_gate.fallback.poi_blacklist": {
+      "text": "拑歉，暂时无法提供这些目的地的旅行服务，您可以告诉我其他想去的目的地，我来帮您看看～",
+      "description": "拒识兔底 - POI 黑名单（绿糰等操控区域）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:41:59",
+      "updatedAt": "2026-09-17 08:41:59",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "reject_gate.fallback.generic": {
+      "text": "很拑歉，旅行顾问专注于为您提供旅游相关的信息和建议。如果您有目的地推荐、行程规划、产品预定等方面的问题，请随时问我。例如可以问我：帮我推荐去三亚五天的跟团游产品。",
+      "description": "拒识兔底 - 一般沐底（竞品/安全/其他）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:41:59",
+      "updatedAt": "2026-09-17 08:41:59",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.h_ob.3": {
+      "text": "这类行程比较讲究细节和节奏把控，交给携程高端定制师来帮您安排。点击下方卡片即可开始。",
+      "description": "转人工话术 - 高端定制 HB 类型文案3（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.h_ob.2": {
+      "text": "您的需求已收到~由高端定制师为您一对一设计会更合适，点击进入专属咨询通道。",
+      "description": "转人工话术 - 高端定制 HB 类型文案2（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.h_ob.1": {
+      "text": "为您对接携程高端定制师，擅长根据您的偏好量身打造深度行程。点击下方卡片，开始您的专属咨询。",
+      "description": "转人工话术 - 高端定制 HB 类型文案1（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.ob.2": {
+      "text": "行程可以找专业定制师来规划~点击下方卡片进入咨询，定制师会根据您的想法量身设计。",
+      "description": "转人工话术 - 定制 B 类型文案2（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.ob.1": {
+      "text": "帮您找到了擅长该地区服务的定制师~点一下即可开始，定制师会帮您设计最合适的行程。",
+      "description": "转人工话术 - 定制 B 类型文案1（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.o.3": {
+      "text": "帮您匹配到了旅行顾问~点一下就能和顾问直接聊，顾问会根据您的情况推荐。",
+      "description": "转人工话术 - 导购 O 类型文案3（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.o.2": {
+      "text": "您的咨询已收到~为了给您提供更专业的解答，可以点击下方卡片，和人工顾问沟通~",
+      "description": "转人工话术 - 导购 O 类型文案2（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.tg.o.1": {
+      "text": "帮您对接真人旅行顾问，顾问可以一对一为您解答疑问、提供专业建议~点击下方卡片开始咨询。",
+      "description": "转人工话术 - 导购 O 类型文案1（问道 TG）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.ob.3": {
+      "text": "帮您匹配到了当地的旅行顾问，顾问会帮您规划最合适的行程，稍等一下~",
+      "description": "转人工话术 - 定制 B 类型文案3（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.ob.2": {
+      "text": "接下来由当地旅行顾问为您量身设计行程，携程官方顾问也会全程保障服务质量~",
+      "description": "转人工话术 - 定制 B 类型文案2（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.ob.1": {
+      "text": "已为您对接目的地旅行顾问，携程官方顾问也会全程在线协助~",
+      "description": "转人工话术 - 定制 B 类型文案1（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.o.3": {
+      "text": "您的咨询已收到~为了给您提供更专业的解答，已为您转接旅行顾问~",
+      "description": "转人工话术 - 导购 O 类型文案3（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.o.2": {
+      "text": "好的，您的需求我同步给旅行顾问了，顾问可以帮您挑更合适的产品，马上就来~",
+      "description": "转人工话术 - 导购 O 类型文案2（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    },
+    "transfer_human.script.default.o.1": {
+      "text": "收到，我帮您对接真人旅行顾问，顾问会根据您的想法推荐合适的线路，稍等一下就好~",
+      "description": "转人工话术 - 导购 O 类型文案1（默认）",
+      "imgUrl": "",
+      "createdAt": "2026-09-17 08:40:26",
+      "updatedAt": "2026-09-17 08:40:26",
+      "createdBy": "Hao Huang （黄浩）（旅游研发部）"
+    }
+  },
+  "stats": {
+    "keyCount": 28,
+    "localeCount": 0,
+    "lastUpdatedAt": "2026-09-17 12:04:25"
+  },
+  "createdAt": "2026-09-17 12:04:25",
+  "updatedAt": "2026-09-17 12:04:25"
+}

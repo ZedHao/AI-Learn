@@ -369,6 +369,136 @@ def test_feed_forward():
     print("✓ 前馈网络测试通过")
 
 
+def test_layer_normalization():
+    """
+    ========== 【测试 4.5】层归一化 (Layer Normalization) ==========
+
+    目的: 验证 LayerNorm 如何稳定数值，防止梯度消失/爆炸
+
+    原理:
+      问题: Attention 和 FFN 的输出数值范围不一致
+            比如 Attention 输出: [-1000, 2000, 0.5, -50]（跨度太大）
+                FFN 输出: [0.001, 100, -200, 0.01]（也很离散）
+            这样的数值会导致：
+              • 梯度爆炸：梯度过大，参数更新不稳定
+              • 梯度消失：深层网络梯度太小，无法更新
+            ❌ 网络无法训练
+
+      解决方案: LayerNorm 把任意范围的数值缩放到 "均值≈0, 标准差≈1"
+
+    核心公式:
+      LayerNorm(x) = γ * (x - μ) / √(σ² + ε) + β
+
+      其中:
+        μ (mu)     = 当前向量的均值
+        σ (sigma)  = 当前向量的标准差
+        γ (gamma)  = 可学习的缩放系数
+        β (beta)   = 可学习的偏移系数
+        ε (epsilon)= 防止除以0的小常数
+
+    具体步骤:
+
+      输入: x = [1, 100, 2, 50]
+      ↓
+      【步1】计算统计量
+        μ = (1 + 100 + 2 + 50) / 4 = 38.25
+        σ = √((1-38.25)² + (100-38.25)² + ...) / 4) = 43.2
+      ↓
+      【步2】归一化
+        x_norm = [(1-38.25)/43.2, (100-38.25)/43.2, ...]
+               = [-0.86, 1.43, -0.86, 0.27]
+               ← 现在均值=0, 标准差=1 ✓
+      ↓
+      【步3】可学习的放缩和平移
+        output = γ * x_norm + β
+               （γ 和 β 初始都是 1 和 0，训练过程中模型自动学习）
+      ↓
+      输出: [-0.86, 1.43, -0.86, 0.27]
+
+    关键作用:
+
+      1. 稳定梯度流
+         没有 LayerNorm:
+           梯度 = 大 × (衰减因子)^深度
+           深层梯度 ≈ 大 × 0.9^20 ≈ 很小（梯度消失）❌
+
+         有 LayerNorm:
+           梯度 = 1 × (衰减因子)^深度
+           归一化让梯度尺度从 [-1000,2000] 变成 [-1,2]
+           深层梯度 ≈ 1 × 0.9^20 ≈ 仍然可接受 ✓
+
+      2. 加速收敛
+         数值在相近范围 → 学习率设置更容易
+         不需要频繁调整学习率
+
+      3. 更好的初始化
+         不管初始权重怎么设，LayerNorm 都能把它拉到稳定范围
+
+    为什么 LayerNorm 不是 Softmax?
+
+      LayerNorm:
+        - 可以是负数 ✓
+        - 可以大于 1 ✓
+        - 和 ≠ 1
+        - 用途: 稳定数值
+        - 位置: 每层之后（Attention / FFN 之后）
+
+      Softmax:
+        - 全都正数 [0, 1]
+        - 和 = 1（概率分布）
+        - 用途: 转成概率
+        - 位置: Attention 权重计算
+
+    验证内容:
+      ✓ 输出形状 == 输入形状 (只是数值调整)
+      ✓ 输出均值 ≈ 0
+      ✓ 输出标准差 ≈ 1
+      ✓ 梯度能正常反向传播
+    """
+    print("\n" + "="*60)
+    print("测试 4.5: 层归一化 (Layer Normalization)")
+    print("="*60)
+
+    batch_size = 2
+    seq_len = 5
+    d_model = 512
+
+    # 创建 LayerNorm
+    layer_norm = nn.LayerNorm(d_model)
+
+    # 模拟 Attention 输出（数值范围不稳定）
+    x_unstable = torch.randn(batch_size, seq_len, d_model) * 100
+    # 乘以100是为了让数值跨度更大，模拟真实训练中的不稳定情况
+    # 现在 x_unstable 的范围可能是 [-100, 100]
+
+    print(f"✓ 输入形状: {x_unstable.shape}")
+    print(f"✓ 输入均值: {x_unstable.mean():.4f}")
+    print(f"✓ 输入标准差: {x_unstable.std():.4f}")
+    print(f"✓ 输入最小值: {x_unstable.min():.4f}")
+    print(f"✓ 输入最大值: {x_unstable.max():.4f}")
+
+    # 应用 LayerNorm
+    x_normalized = layer_norm(x_unstable)
+
+    print(f"\n【应用 LayerNorm 后】")
+    print(f"✓ 输出形状: {x_normalized.shape}")
+    print(f"✓ 输出均值: {x_normalized.mean():.4f} (应该 ≈ 0)")
+    print(f"✓ 输出标准差: {x_normalized.std():.4f} (应该 ≈ 1)")
+    print(f"✓ 输出最小值: {x_normalized.min():.4f}")
+    print(f"✓ 输出最大值: {x_normalized.max():.4f}")
+
+    # 验证统计量
+    assert abs(x_normalized.mean().item()) < 0.01, "均值应该接近0"
+    assert abs(x_normalized.std().item() - 1.0) < 0.1, "标准差应该接近1"
+
+    print(f"\n【对比】")
+    print(f"输入跨度:   [{x_unstable.min():.2f}, {x_unstable.max():.2f}] = {(x_unstable.max() - x_unstable.min()):.2f}")
+    print(f"输出跨度:   [{x_normalized.min():.2f}, {x_normalized.max():.2f}] = {(x_normalized.max() - x_normalized.min()):.2f}")
+    print(f"✓ LayerNorm 成功把数值范围归一化到稳定区间！")
+
+    print("\n✓ 层归一化测试通过")
+
+
 def test_encoder_layer():
     """
     ========== 【测试 5】编码器层 (Encoder Layer) ==========
@@ -992,12 +1122,25 @@ def run_all_tests():
     print("\n" + "="*80)
     print("开始运行 Transformer 实现测试")
     print("="*80)
+    """
+    测试1: 位置编码          ← 学基础
+      测试2: 单头注意力        ← 学基础
+      测试3: 多头注意力        ← 学基础
+      测试4: 前馈网络          ← 学基础
+      ✨  测试4.5: LayerNorm    ← 学怎么稳定 【新增】
+      测试5: 编码器层          ← 看组装效果
+      测试6: 解码器层          ← 看组装效果
+      测试7: 完整Transformer   ← 看端到端
+      测试8: 梯度流动          ← 验证可训练
+      测试9: 变长序列          ← 验证灵活性
 
+    """
     try:
         test_positional_encoding()
         test_scaled_dot_product_attention()
         test_multi_head_attention()
         test_feed_forward()
+        test_layer_normalization()
         test_encoder_layer()
         test_decoder_layer()
         test_transformer()

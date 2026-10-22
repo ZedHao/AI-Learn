@@ -180,7 +180,6 @@ print("     ", end="")
 for word in words:
     print(f"{word:>6}", end=" ")
 print()
-pdb.set_trace()
 for i, word_i in enumerate(words):
     print(f"'{word_i}' ", end="")
     for j, word_j in enumerate(words):
