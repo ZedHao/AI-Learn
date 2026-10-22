@@ -1,0 +1,19 @@
+transformer/4_5test_layer_normalization.py
+  s_60e187ae1eb31a::t_4de32dc16ebafa 1-394
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.51-trip",
+  "base_commit_sha": "8c5a91e9ee968b802f6db80b5947c543a3787dfa",
+  "prompts": {},
+  "sessions": {
+    "s_60e187ae1eb31a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2a69dc0e-72b2-420e-a7d2-808b07815299",
+        "model": "arn:aws:bedrock:us-west-2:432181126620:application-inference-profile/w8iep3luvsbh"
+      },
+      "human_author": "huangh3 <huangh3@trip.com>"
+    }
+  }
+}
